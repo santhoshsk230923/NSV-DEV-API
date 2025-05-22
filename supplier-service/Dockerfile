@@ -2,20 +2,21 @@ FROM eclipse-temurin:17-jdk-alpine
 
 WORKDIR /app
 
-# Copy only necessary files
-COPY mvnw .
-COPY .mvn .mvn
-COPY pom.xml .
-COPY ../pom.xml ../pom.xml
-COPY src src
+# Copy everything from root, assuming the Docker build context is the root of the project
+COPY . .
 
-# Build the JAR inside Docker image
-RUN ./mvnw clean package -DskipTests
+# Make sure mvnw is executable
+RUN chmod +x mvnw
 
-# Automatically detect and run the built JAR
+# Build only the transaction-service module
+RUN ./mvnw clean package -pl supplier-service -am -DskipTests
+
+# Set working directory to the module
+WORKDIR /app/supplier-service
+
+# Copy the generated JAR to a consistent name
 RUN cp target/*.jar app.jar
 
-# Expose the port the app runs on
 EXPOSE 8083
 
 CMD ["java", "-jar", "app.jar"]
