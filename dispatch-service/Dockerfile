@@ -1,27 +1,21 @@
-# Stage 1: Build the JAR
-FROM maven:3.9.6-eclipse-temurin-17 as builder
+FROM eclipse-temurin:17-jdk-alpine
+
 WORKDIR /app
 
-# Copy pom.xml and download dependencies first (leverages Docker cache)
+# Copy only necessary files
+COPY mvnw .
+COPY .mvn .mvn
 COPY pom.xml .
-RUN mvn dependency:go-offline
+COPY ../pom.xml ../pom.xml
+COPY src src
 
-# Copy rest of the source code
-COPY src ./src
+# Build the JAR inside Docker image
+RUN ./mvnw clean package -DskipTests
 
-# Build the JAR file
-RUN mvn clean package -DskipTests
+# Automatically detect and run the built JAR
+RUN cp target/*.jar app.jar
 
-# Stage 2: Run the app
-FROM eclipse-temurin:17
-WORKDIR /app
-
-# Copy the built JAR from the builder stage
-COPY --from=builder /app/target/*.jar app.jar
-
-# Expose the application port
+# Expose the port the app runs on
 EXPOSE 8087
 
-# Run the app
-ENTRYPOINT ["java", "-jar", "app.jar"]
-
+CMD ["java", "-jar", "app.jar"]
