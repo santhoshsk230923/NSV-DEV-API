@@ -52,8 +52,8 @@
 
     <modules>
 <!--        <module>api-gateway</module>-->
-<!--        <module>service-registry</module>-->
-        <module>config-server</module>
+<!--        <module>service-registry</module>
+        <module>config-server</module>-->
         <module>auth-service</module>
         <module>buyer-service</module>
         <module>supplier-service</module>
