@@ -1,27 +1,22 @@
-# Stage 1: Build the JAR
-FROM maven:3.9.6-eclipse-temurin-17 as builder
+FROM eclipse-temurin:17-jdk-alpine
+
 WORKDIR /app
 
-# Copy pom.xml and download dependencies first (leverages Docker cache)
-COPY pom.xml .
-RUN mvn dependency:go-offline
+# Copy everything from root, assuming the Docker build context is the root of the project
+COPY . .
 
-# Copy rest of the source code
-COPY src ./src
+# Make sure mvnw is executable
+RUN chmod +x mvnw
 
-# Build the JAR file
-RUN mvn clean package -DskipTests
+# Build only the transaction-service module
+RUN ./mvnw clean package -pl dispatch-service -am -DskipTests
 
-# Stage 2: Run the app
-FROM eclipse-temurin:17
-WORKDIR /app
+# Set working directory to the module
+WORKDIR /app/dispatch-service
 
-# Copy the built JAR from the builder stage
-COPY --from=builder /app/target/*.jar app.jar
+# Copy the generated JAR to a consistent name
+RUN cp target/*.jar app.jar
 
-# Expose the application port
 EXPOSE 8087
 
-# Run the app
-ENTRYPOINT ["java", "-jar", "app.jar"]
-
+CMD ["java", "-jar", "app.jar"]
