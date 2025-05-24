@@ -1,0 +1,160 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  buyer-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        MODULE: buyer-service
+    environment:
+      SPRING_PROFILES_ACTIVE: staging
+      SPRING_DATASOURCE_URL: ${MYSQL_URL}
+      SPRING_DATASOURCE_USERNAME: ${MYSQL_USER}
+      SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD}
+      JWT_ISSUER_URI: ${JWT_ISSUER_URI}
+      JWT_JWK_URI: ${JWT_JWK_URI}
+    depends_on:
+      - mysql
+    ports:
+      - "8084:8080"
+
+  supplier-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        MODULE: supplier-service
+    environment:
+      SPRING_PROFILES_ACTIVE: staging
+      SPRING_DATASOURCE_URL: ${MYSQL_URL}
+      SPRING_DATASOURCE_USERNAME: ${MYSQL_USER}
+      SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD}
+      JWT_ISSUER_URI: ${JWT_ISSUER_URI}
+      JWT_JWK_URI: ${JWT_JWK_URI}
+    depends_on:
+      - mysql
+    ports:
+      - "8083:8080"
+
+  supply-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        MODULE: supply-service
+    environment:
+      SPRING_PROFILES_ACTIVE: staging
+      SPRING_DATASOURCE_URL: ${MYSQL_URL}
+      SPRING_DATASOURCE_USERNAME: ${MYSQL_USER}
+      SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD}
+      JWT_ISSUER_URI: ${JWT_ISSUER_URI}
+      JWT_JWK_URI: ${JWT_JWK_URI}
+    depends_on:
+      - mysql
+    ports:
+      - "8082:8080"
+
+  dispatch-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        MODULE: dispatch-service
+    environment:
+      SPRING_PROFILES_ACTIVE: staging
+      SPRING_DATASOURCE_URL: ${MYSQL_URL}
+      SPRING_DATASOURCE_USERNAME: ${MYSQL_USER}
+      SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD}
+      JWT_ISSUER_URI: ${JWT_ISSUER_URI}
+      JWT_JWK_URI: ${JWT_JWK_URI}
+    depends_on:
+      - mysql
+    ports:
+      - "8087:8080"
+
+  factory-processing-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        MODULE: factory-processing-service
+    environment:
+      SPRING_PROFILES_ACTIVE: staging
+      SPRING_DATASOURCE_URL: ${MYSQL_URL}
+      SPRING_DATASOURCE_USERNAME: ${MYSQL_USER}
+      SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD}
+      JWT_ISSUER_URI: ${JWT_ISSUER_URI}
+      JWT_JWK_URI: ${JWT_JWK_URI}
+    depends_on:
+      - mysql
+    ports:
+      - "8086:8080"
+
+  transaction-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        MODULE: transaction-service
+    environment:
+      SPRING_PROFILES_ACTIVE: staging
+      SPRING_DATASOURCE_URL: ${MYSQL_URL}
+      SPRING_DATASOURCE_USERNAME: ${MYSQL_USER}
+      SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD}
+      JWT_ISSUER_URI: ${JWT_ISSUER_URI}
+      JWT_JWK_URI: ${JWT_JWK_URI}
+    depends_on:
+      - mysql
+    ports:
+      - "8081:8080"
+
+  invoice-with-gst-services:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        MODULE: invoice-with-gst-services
+    environment:
+      SPRING_PROFILES_ACTIVE: staging
+      SPRING_DATASOURCE_URL: ${MYSQL_URL}
+      SPRING_DATASOURCE_USERNAME: ${MYSQL_USER}
+      SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD}
+      JWT_ISSUER_URI: ${JWT_ISSUER_URI}
+      JWT_JWK_URI: ${JWT_JWK_URI}
+    depends_on:
+      - mysql
+    ports:
+      - "8085:8080"
+
+  invoice-without-gst-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        MODULE: invoice-without-gst-service
+    environment:
+      SPRING_PROFILES_ACTIVE: staging
+      SPRING_DATASOURCE_URL: ${MYSQL_URL}
+      SPRING_DATASOURCE_USERNAME: ${MYSQL_USER}
+      SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD}
+      JWT_ISSUER_URI: ${JWT_ISSUER_URI}
+      JWT_JWK_URI: ${JWT_JWK_URI}
+    depends_on:
+      - mysql
+    ports:
+      - "8084:8080"
+
+volumes:
+  mysql_data:
