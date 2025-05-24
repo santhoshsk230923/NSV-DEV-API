@@ -14,7 +14,8 @@ WORKDIR /app
 
 ARG MODULE
 RUN echo "Looking for JAR in /app/${MODULE}/target/"
-COPY --from=builder /app/${MODULE}/target/*.jar app.jar
+#COPY --from=builder /app/${MODULE}/target/*.jar app.jar
+COPY --from=builder /app/target/${MODULE}-*.jar app.jar
 
 ENV SPRING_PROFILES_ACTIVE=staging
 EXPOSE 8080
