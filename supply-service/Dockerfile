@@ -13,6 +13,7 @@ FROM eclipse-temurin:17-jdk-alpine
 WORKDIR /app
 
 ARG MODULE
+RUN echo "Looking for JAR in /app/${MODULE}/target/"
 COPY --from=builder /app/${MODULE}/target/*.jar app.jar
 
 ENV SPRING_PROFILES_ACTIVE=staging
