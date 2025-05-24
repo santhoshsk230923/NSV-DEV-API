@@ -28,7 +28,7 @@ services:
     depends_on:
       - mysql
     ports:
-      - "8084:8080"
+      - "8084:8088"
 
   supplier-service:
     build:
@@ -46,7 +46,7 @@ services:
     depends_on:
       - mysql
     ports:
-      - "8083:8080"
+      - "8083:8088"
 
   supply-service:
     build:
@@ -64,7 +64,7 @@ services:
     depends_on:
       - mysql
     ports:
-      - "8082:8080"
+      - "8082:8088"
 
   dispatch-service:
     build:
@@ -82,7 +82,7 @@ services:
     depends_on:
       - mysql
     ports:
-      - "8087:8080"
+      - "8087:8088"
 
   factory-processing-service:
     build:
@@ -100,7 +100,7 @@ services:
     depends_on:
       - mysql
     ports:
-      - "8086:8080"
+      - "8086:8088"
 
   transaction-service:
     build:
@@ -118,7 +118,7 @@ services:
     depends_on:
       - mysql
     ports:
-      - "8081:8080"
+      - "8081:8088"
 
   invoice-with-gst-services:
     build:
@@ -136,7 +136,7 @@ services:
     depends_on:
       - mysql
     ports:
-      - "8085:8080"
+      - "8085:8088"
 
   invoice-without-gst-service:
     build:
@@ -154,7 +154,7 @@ services:
     depends_on:
       - mysql
     ports:
-      - "8084:8080"
+      - "8084:8088"
 
 volumes:
   mysql_data:
