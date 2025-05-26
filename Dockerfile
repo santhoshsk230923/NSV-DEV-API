@@ -20,6 +20,6 @@ COPY --from=builder /app/${MODULE}/target/*.jar app.jar
 EXPOSE 8088
 
 # Set default profile to 'staging', allow override via SPRING_PROFILES_ACTIVE env
-ENV SPRING_PROFILES_ACTIVE=staging
+ENV SPRING_PROFILES_ACTIVE=production
 
 CMD ["sh", "-c", "java -jar app.jar --spring.profiles.active=${SPRING_PROFILES_ACTIVE}"]
