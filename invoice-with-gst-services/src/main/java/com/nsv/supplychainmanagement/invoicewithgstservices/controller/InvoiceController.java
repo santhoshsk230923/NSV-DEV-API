@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -52,6 +53,11 @@ public class InvoiceController {
     public ResponseEntity<Void> deleteInvoice(@PathVariable Integer id) {
         invoiceService.deleteInvoice(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/total-revenue")
+    public ResponseEntity<BigDecimal> getTotalRevenue() {
+        return ResponseEntity.ok(invoiceService.getTotalRevenue());
     }
 
 }
