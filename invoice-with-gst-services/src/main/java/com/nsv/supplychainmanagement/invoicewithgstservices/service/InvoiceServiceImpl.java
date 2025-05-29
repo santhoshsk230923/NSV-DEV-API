@@ -4,6 +4,7 @@ import com.nsv.supplychainmanagement.invoicewithgstservices.model.Invoice;
 import com.nsv.supplychainmanagement.invoicewithgstservices.repository.InvoiceRepository;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,5 +45,10 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Override
     public void deleteInvoice(Integer id) {
         invoiceRepository.deleteById(id);
+    }
+
+    @Override
+    public BigDecimal getTotalRevenue() {
+        return invoiceRepository.getTotalRevenue();
     }
 }

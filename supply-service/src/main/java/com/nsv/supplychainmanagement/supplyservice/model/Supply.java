@@ -51,7 +51,7 @@ public class Supply {
     private String permitNumber;
 
     @JsonProperty("supply_quantity")
-    @Column(nullable = false, precision = 10, scale = 2)
+    @Column(name = "supply_quantity",nullable = false, precision = 10, scale = 2)
     private BigDecimal supplyQuantity;
 
     @JsonProperty("amountPerMT")

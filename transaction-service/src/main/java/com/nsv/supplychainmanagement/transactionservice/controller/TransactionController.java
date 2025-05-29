@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -53,10 +54,14 @@ public class TransactionController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('delete:transactions')")
     public ResponseEntity<Void> deleteTransaction(@PathVariable Integer id) {
         transactionService.deleteTransaction(id);
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/total-paid")
+    @PreAuthorize("hasAuthority('read:transactions')")
+    public ResponseEntity<BigDecimal> getTotalAmountPaid() {
+        return ResponseEntity.ok(transactionService.getTotalAmountPaid());
+    }
 }

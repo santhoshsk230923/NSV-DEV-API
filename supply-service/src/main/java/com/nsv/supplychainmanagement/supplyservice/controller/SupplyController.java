@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -57,5 +58,12 @@ public class SupplyController {
     public ResponseEntity<Void> deleteSupply(@PathVariable Integer id) {
         supplyService.deleteSupply(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/total-quantity")
+    @PreAuthorize("hasAuthority('read:supplies')")
+    public ResponseEntity<BigDecimal> getTotalSupplyQuantity() {
+        log.info("========>>"+ supplyService.getTotalSupplyQuantity());
+        return ResponseEntity.ok(supplyService.getTotalSupplyQuantity());
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -51,4 +52,10 @@ public class FactoryProcessingController {
         factoryProcessingService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/total-processed")
+    public ResponseEntity<BigDecimal> getTotalProcessed() {
+        return ResponseEntity.ok(factoryProcessingService.getTotalProcessed());
+    }
+
 }

@@ -5,6 +5,7 @@ import com.nsv.supplychainmanagement.factoryprocessingservice.repository.Factory
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -38,6 +39,11 @@ public class FactoryProcessingServiceImpl implements FactoryProcessingService {
     @Override
     public void delete(Integer id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    public BigDecimal getTotalProcessed() {
+        return repository.getTotalProcessed();
     }
 
 }

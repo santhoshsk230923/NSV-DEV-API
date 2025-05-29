@@ -64,6 +64,7 @@
         <module>common-library</module>
         <module>invoice-without-gst-service</module>
         <module>invoice-with-gst-services</module>
+        <module>dashboard-service</module>
     </modules>
 
     <dependencyManagement>

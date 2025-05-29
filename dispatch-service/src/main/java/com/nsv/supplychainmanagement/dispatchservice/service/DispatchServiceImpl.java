@@ -4,6 +4,7 @@ import com.nsv.supplychainmanagement.dispatchservice.repository.DispatchReposito
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,5 +49,10 @@ public class DispatchServiceImpl implements DispatchService {
     @Override
     public void deleteDispatch(Integer id) {
         dispatchRepository.deleteById(id);
+    }
+
+    @Override
+    public BigDecimal getTotalDispatched() {
+        return dispatchRepository.getTotalDispatched();
     }
 }

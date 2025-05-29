@@ -5,6 +5,7 @@ import com.nsv.supplychainmanagement.supplyservice.repository.SupplyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,5 +41,10 @@ public class SupplyServiceImpl implements SupplyService {
     @Override
     public void deleteSupply(Integer id) {
         supplyRepository.deleteById(id);
+    }
+
+    @Override
+    public BigDecimal getTotalSupplyQuantity() {
+        return supplyRepository.getTotalSupplyQuantity();
     }
 }
